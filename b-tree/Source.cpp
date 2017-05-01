@@ -3,6 +3,7 @@ using namespace std;
 
 int main()
 {
+	//hello
 	b_tree_class tree;
 	for (int i = 0; i < 10; i++)
 	{
