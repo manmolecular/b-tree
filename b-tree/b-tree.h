@@ -17,14 +17,14 @@ public:
 	void btree_split_node(pointer_btree node, pointer_btree parent, int index);
 	void btree_insert(int key, int value);
 	void show();
-	bool search(int key, int *value);
+	int search(int key);
 };
 
-inline bool b_tree_class::search(int key, int *value)
+inline int b_tree_class::search(int key)
 {
 	if (root != NULL)
 	{
-		return root->search(key, value);
+		return root->search(key);
 	}
 	return false;
 }

@@ -18,39 +18,35 @@ public:
 	b_tree_node();
 	~b_tree_node();
 	void show();
-	bool search(int _key, int *_value);
+	int search(int _key);
 };
 
 typedef b_tree_node *pointer_btree;
 typedef b_tree_node **p_pointer_btree;
 
-bool b_tree_node::search(int _key, int *_value)
+int b_tree_node::search(int _key)
 {
 	int i = 0;
-	while (i < nkeys && _key > key[i])
-	{
-		i++;
-	}
+	for (; i < nkeys && _key > key[i]; i++) {};
 	if (_key == key[i])
 	{
-		*_value = value[i];
-		return true;
+		int _value = value[i];
+		return _value;
 	}
 	if (leaf)
 	{
 		return false;
 	}
-	return child[i]->search(_key, _value);
+	return child[i]->search(_key);
 }
 
 inline b_tree_node::b_tree_node()
 {
 	leaf = true;
 	nkeys = 0;
-
 	key = (int*)malloc(sizeof(*key) * 2 * T - 1);	
 	value = (int*)malloc(sizeof(*value) * 2 * T - 1);
-	child = new b_tree_node*[2 * T - 1];
+	child = new b_tree_node*[2 * T];
 }
 
 inline b_tree_node::~b_tree_node()

@@ -9,7 +9,7 @@ int main()
 {
 	b_tree_class tree;
 	srand(time(0));
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 101; i++)
 	{
 		tree.btree_insert(i, i*rand() % 100);
 	}
@@ -17,9 +17,9 @@ int main()
 
 	cout << endl << "Search request (key): ";
 	int s_req;
-	int value;
 	cin >> s_req;
-	if (tree.search(s_req, &value))
+	int value = tree.search(s_req);
+	if (value)
 	{
 		cout << "Value is: " << value << endl;
 	}
