@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <cstdlib>
 #include <cstddef>
 #include <iostream>
@@ -11,12 +11,21 @@ private:
 	pointer_btree root;
 public:
 	b_tree_class();
-	void btree_lookup(pointer_btree tree, int key, p_pointer_btree node, int *index);
 	pointer_btree btree_insert_nonfull(pointer_btree node, int key, int value);
 	void btree_split_node(pointer_btree node, pointer_btree parent, int index);
 	void btree_insert(int key, int value);
 	void show();
+	bool search(int key, int *value);
 };
+
+inline bool b_tree_class::search(int key, int *value)
+{
+	if (root != NULL)
+	{
+		return root->search(key, value);
+	}
+	return false;
+}
 
 inline b_tree_class::b_tree_class()
 {
@@ -32,31 +41,7 @@ inline void b_tree_class::show()
 	cout << endl;
 }
 
-inline void b_tree_class::btree_lookup(pointer_btree tree, int key, p_pointer_btree node, int * index)
-{
-	int i;
-	for (i = 0; i < tree->nkeys && key>tree->key[i]; )
-	{
-		i++;
-	}
-	if (i < tree->nkeys && key == tree->key[i])
-	{
-		*node = tree;
-		*index = i;
-		return;
-	}
-	if (!tree->leaf)
-	{
-		/* Disk read tree->child[i] */
-		btree_lookup(tree, key, node, index);
-	}
-	else
-	{
-		*node = NULL;
-	}
-}
-
-inline pointer_btree b_tree_class::btree_insert_nonfull(pointer_btree node, int key, int value)
+pointer_btree b_tree_class::btree_insert_nonfull(pointer_btree node, int key, int value)
 {
 	int i = node->nkeys - 1;
 	if (node->leaf)
@@ -91,7 +76,7 @@ inline pointer_btree b_tree_class::btree_insert_nonfull(pointer_btree node, int 
 	return node;
 }
 
-inline void b_tree_class::btree_insert(int key, int value)
+void b_tree_class::btree_insert(int key, int value)
 {
 	if (root == NULL)
 	{
@@ -122,21 +107,17 @@ inline void b_tree_class::btree_insert(int key, int value)
 	}
 }
 
-inline void b_tree_class::btree_split_node(pointer_btree node, pointer_btree parent, int index)
+void b_tree_class::btree_split_node(pointer_btree node, pointer_btree parent, int index)
 {
 	pointer_btree temp = new b_tree_node;
 	int i;
 
 	temp->leaf = node->leaf;
-	//cout << "temp->leaf: " << temp->leaf << endl;
 	temp->nkeys = T - 1;
-	//cout << "temp->nkeys: " << temp->nkeys << endl;
 	for (i = 0; i < T - 1; i++)
 	{
 		temp->key[i] = node->key[T + i];
-		//cout << "temp->key[i]: " << temp->key[i] << endl;
 		temp->value[i] = node->value[T + i];
-		//cout << "temp->value[i]: " << temp->value[i] << endl << endl;
 	}
 	if (!node->leaf)
 	{
@@ -148,15 +129,14 @@ inline void b_tree_class::btree_split_node(pointer_btree node, pointer_btree par
 	node->nkeys = T - 1;
 
 	/* Insert median key into parent node*/
-	//for (i = parent->nkeys; i >= 0 && i <= index + 1; i--)			//не >=, а строго > - иначе child[-1] pos
+	//for (i = parent->nkeys; i >= 0 && i <= index + 1; i--)			//РЅРµ >=, Р° СЃС‚СЂРѕРіРѕ > - РёРЅР°С‡Рµ child[-1] pos
 	for (i = parent->nkeys; i >= index + 1; i--)
 	{
 		parent->child[i + 1] = parent->child[i];
 	}
-	parent->child[index + 1] = temp;			// !!!!!!!
+	parent->child[index + 1] = temp;
 
-
-												//for (i = parent->nkeys - 1; i >= 0 && i <= index; i--)
+	//for (i = parent->nkeys - 1; i >= 0 && i <= index; i--)
 	for (i = parent->nkeys - 1; i >= index; i--)
 	{
 		parent->key[i + 1] = parent->key[i];
