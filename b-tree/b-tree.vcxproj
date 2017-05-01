@@ -142,16 +142,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="node-b-tree.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="b-tree.h" />
-    <ClInclude Include="b-tree_backup_v3.h" />
-    <ClInclude Include="b-tree_backup_v1.h" />
-    <ClInclude Include="b-tree_backup_v2.h" />
     <ClInclude Include="node-b-tree.h" />
-    <ClInclude Include="node-b-tree_backup_v1.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

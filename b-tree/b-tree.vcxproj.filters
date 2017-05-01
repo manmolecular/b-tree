@@ -18,24 +18,9 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="node-b-tree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="b-tree_backup_v1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="b-tree_backup_v2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="b-tree_backup_v3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="b-tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node-b-tree_backup_v1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="node-b-tree.h">

@@ -5,6 +5,8 @@
 #include "node-b-tree.h"
 using namespace std;
 
+//Класс b-tree
+
 class b_tree_class
 {
 private:

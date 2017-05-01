@@ -3,6 +3,8 @@
 #define T 4
 using namespace std;
 
+//Построение узла
+
 class b_tree_node
 {
 private:
