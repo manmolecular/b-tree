@@ -126,7 +126,20 @@ bool b_tree_class::btree_erase(int key)
 			/* Если все соседи по T-1 ключу */
 			else if (neighbor == NULL)
 			{
-
+				if (parent_index == parent->nkeys)
+				{
+					parent->merge(parent_index - 1);
+				}
+				else
+				{
+					parent->merge(parent_index);
+				}
+				for (int i = delete_index; i < node->nkeys - 1; i++)
+				{
+					node->key[i] = node->key[i + 1];
+					node->value[i] = node->value[i + 1];
+				}
+				node->nkeys--;
 			}
 		}
 	}

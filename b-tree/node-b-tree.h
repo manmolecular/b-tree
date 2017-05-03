@@ -53,9 +53,9 @@ inline b_tree_node::b_tree_node()
 
 inline b_tree_node::~b_tree_node()
 {
-	//free(key);
-	//free(value);
-	//free(child);
+	free(key);
+	free(value);
+	free(child);
 }
 
 void b_tree_node::show()
