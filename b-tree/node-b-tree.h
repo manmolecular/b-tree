@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "b-tree.h"
-#define T 4
+#define T 3
 using namespace std;
 
 //Построение узла
@@ -44,16 +44,18 @@ inline b_tree_node::b_tree_node()
 {
 	leaf = true;
 	nkeys = 0;
-	key = (int*)malloc(sizeof(*key) * 2 * T - 1);	
-	value = (int*)malloc(sizeof(*value) * 2 * T - 1);
+	//key = (int*)malloc(sizeof(*key) * 2 * T - 1);	
+	//value = (int*)malloc(sizeof(*value) * 2 * T - 1);
+	key = new int[2 * T - 1];
+	value = new int[2 * T - 1];
 	child = new b_tree_node*[2 * T];
 }
 
 inline b_tree_node::~b_tree_node()
 {
-	free(key);
-	free(value);
-	free(child);
+	//free(key);
+	//free(value);
+	//free(child);
 }
 
 void b_tree_node::show()

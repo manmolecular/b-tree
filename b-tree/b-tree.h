@@ -16,9 +16,127 @@ public:
 	pointer_btree btree_insert_nonfull(pointer_btree node, int key, int value);
 	void btree_split_node(pointer_btree node, pointer_btree parent, int index);
 	void btree_insert(int key, int value);
+	bool btree_erase(int key);
 	void show();
 	int search(int key);
 };
+
+bool b_tree_class::btree_erase(int key)
+{
+	/* Если дерево пусто */
+	if (root == NULL)
+	{
+		return false;
+	}
+	/* Поиск удаляемого элемента */
+	pointer_btree node, parent, neighbor;
+	node = root;
+	parent = NULL;
+	neighbor = NULL;
+	int delete_index = 0;
+	int parent_index = 0;
+
+	while (true)
+	{
+		for (; delete_index < node->nkeys && key > node->key[delete_index]; delete_index++) {};
+		if (key == node->key[delete_index])
+		{
+			/* Нашли ключ для удаления */
+			break;
+		}
+		if (node->leaf)
+		{
+			/* Если узел - лист */
+			return false;
+		}
+		parent = node;
+		parent_index = delete_index;
+		node = node->child[delete_index];
+	}
+
+	/* Удаление найденного узла */
+	/* Если текущий узел - лист */
+	if (node->leaf)
+	{
+		/* Если ключей больше T-1 */
+		if (node->nkeys > T - 1)
+		{
+			/* Удаление и сдвиг всех элементов*/
+			//delete node->value[delete_index];
+			for (int i = delete_index; i < node->nkeys - 1; i++)
+			{
+				node->key[i] = node->key[i + 1];
+				node->value[i] = node->value[i + 1];
+			}
+			node->nkeys--;
+		}
+		/* Если ключей меньше T-1*/
+		else
+		{
+			bool first = parent_index == 0;
+			bool last = parent_index == parent->nkeys;
+			/* Если не на последнем месте*/
+			if (!last)
+			{
+				/* Если сосед справа содержит больше T-1 ключа*/
+				if (parent->child[parent_index + 1]->nkeys > T - 1)
+				{
+					neighbor = parent->child[parent_index + 1];
+					/* Обычное удаление */
+					//delete node->value[delete_index];
+					for (int i = delete_index; i < node->nkeys - 1; i++)
+					{
+						node->key[i] = node->key[i + 1];
+						node->value[i] = node->value[i + 1];
+					}
+					node->key[node->nkeys - 1] = parent->key[parent_index];
+					node->value[node->nkeys - 1] = parent->value[parent_index];
+
+					parent->key[parent_index] = neighbor->key[0];
+					parent->value[parent_index] = neighbor->value[0];
+
+					for (int i = 0; i < neighbor->nkeys - 1; i++)
+					{
+						neighbor->key[i] = neighbor->key[i + 1];
+						neighbor->value[i] = neighbor->value[i + 1];
+					}
+					neighbor->nkeys--;
+					first != first;
+				}
+			}
+			else if (!first)
+			{
+				/* Если сосед слева содержит больше T-1 ключа*/
+				if (parent->child[parent_index - 1]->nkeys > T - 1)
+				{
+					neighbor = parent->child[parent_index - 1];
+					for (int i = delete_index; i > 0; i--)
+					{
+						node->key[i] = node->key[i - 1];
+						node->value[i] = node->value[i - 1];
+					}
+					node->key[0] = parent->key[parent_index];
+					node->value[0] = parent->value[parent_index];
+
+					parent->key[parent_index] = neighbor->key[neighbor->nkeys - 1];
+					parent->value[parent_index] = neighbor->value[neighbor->nkeys - 1];
+					neighbor->nkeys--;
+				}
+			}
+			/* Если все соседи по T-1 ключу */
+			else if (neighbor == NULL)
+			{
+
+			}
+		}
+	}
+	/* Если текущий узел - не лист */
+	else
+	{
+
+	}
+	return true;
+}
 
 inline int b_tree_class::search(int key)
 {
