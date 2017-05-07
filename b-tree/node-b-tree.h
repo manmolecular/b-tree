@@ -1,9 +1,9 @@
-#pragma once
+п»ї#pragma once
 #include "b-tree.h"
 #define T 4
 using namespace std;
 
-/* Класс узла b-дерева */
+/* РљР»Р°СЃСЃ СѓР·Р»Р° b-РґРµСЂРµРІР° */
 
 class b_tree_node
 {
@@ -25,7 +25,7 @@ public:
 typedef b_tree_node *pointer_btree;
 typedef b_tree_node **p_pointer_btree;
 
-/* Поиск ключа */
+/* РџРѕРёСЃРє РєР»СЋС‡Р° */
 inline int b_tree_node::find_key(int _key)
 {
 	int i = 0;
@@ -36,7 +36,7 @@ inline int b_tree_node::find_key(int _key)
 	return i;
 }
 
-/* Поиск значения по ключу */
+/* РџРѕРёСЃРє Р·РЅР°С‡РµРЅРёСЏ РїРѕ РєР»СЋС‡Сѓ */
 inline int b_tree_node::search(int _key)
 {
 	int i = find_key(_key);
@@ -52,7 +52,7 @@ inline int b_tree_node::search(int _key)
 	return child[i]->search(_key);
 }
 
-/* Конструктор */
+/* РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ */
 inline b_tree_node::b_tree_node()
 {
 	leaf = true;
@@ -64,7 +64,7 @@ inline b_tree_node::b_tree_node()
 	child = new b_tree_node*[2 * T];
 }
 
-/* Деструктор */
+/* Р”РµСЃС‚СЂСѓРєС‚РѕСЂ */
 inline b_tree_node::~b_tree_node()
 {
 	free(key);
@@ -72,7 +72,7 @@ inline b_tree_node::~b_tree_node()
 	free(child);
 }
 
-/* Отображение */
+/* РћС‚РѕР±СЂР°Р¶РµРЅРёРµ */
 void b_tree_node::show()
 {
 	int i;
