@@ -3,7 +3,7 @@
 #define T 3
 using namespace std;
 
-//Построение узла
+/* Старый backup (неактуально) */
 
 class b_tree_node
 {

@@ -5,7 +5,7 @@
 #include "node-b-tree.h"
 using namespace std;
 
-//Класс b-tree
+/* Старый backup (неактуально) */
 
 class b_tree_class
 {
