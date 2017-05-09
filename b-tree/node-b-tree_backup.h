@@ -19,7 +19,6 @@ public:
 	~b_tree_node();
 	void show();
 	int search(int _key);
-	
 };
 
 typedef b_tree_node *pointer_btree;

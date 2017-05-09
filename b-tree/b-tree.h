@@ -22,8 +22,8 @@ public:
 	int search(int key);
 	void remove_from_leaf(int i, pointer_btree node);
 	void remove_from_nonleaf(int _i, pointer_btree node);
-	int get_pred(int i, pointer_btree node);
-	int get_succ(int i, pointer_btree node);
+	int get_pred(int i, pointer_btree node, int *_temp);
+	int get_succ(int i, pointer_btree node, int *_temp);
 	void merge(int _i, pointer_btree node);
 	void fill(int _i, pointer_btree node);
 	void borrow_from_prev(int _i, pointer_btree node);
@@ -199,7 +199,7 @@ inline void b_tree_class::merge(int _i, pointer_btree node)
 }
 
 /* Находим индекс последователя */
-inline int b_tree_class::get_succ(int i, pointer_btree node)
+inline int b_tree_class::get_succ(int i, pointer_btree node, int *_temp)
 {
 	pointer_btree cur = node->child[i + 1];
 	/* Двигаемся максимально влево до тех пор, 
@@ -208,11 +208,12 @@ inline int b_tree_class::get_succ(int i, pointer_btree node)
 	{
 		cur = cur->child[0];
 	}
+	*_temp = cur->value[0];
 	return cur->key[0];
 }
 
 /* Находим индекс предшественника */
-inline int b_tree_class::get_pred(int i, pointer_btree node)
+inline int b_tree_class::get_pred(int i, pointer_btree node, int *_temp)
 {
 	pointer_btree cur = node->child[i];
 	/* Двигаемся максимально вправо до тех пор, 
@@ -222,7 +223,8 @@ inline int b_tree_class::get_pred(int i, pointer_btree node)
 		cur = cur->child[cur->nkeys];
 	}
 
-	/* Возвращаем последний ключ в листе*/
+	/* Возвращаем последний ключ и значение в листе*/
+	*_temp = cur->value[cur->nkeys - 1];
 	return cur->key[cur->nkeys - 1];
 }
 
@@ -238,8 +240,12 @@ void b_tree_class::remove_from_nonleaf(int _i, pointer_btree node)
 	*/
 	if (node->child[_i]->nkeys >= T)
 	{
-		int pred = get_pred(_i, node);
+		int _temp = 0;
+		int pred = get_pred(_i, node, &_temp);
+
 		node->key[_i] = pred;
+		node->value[_i] = _temp;
+
 		btree_erase(pred, node->child[_i]);
 	}
 	/*
@@ -251,8 +257,12 @@ void b_tree_class::remove_from_nonleaf(int _i, pointer_btree node)
 	*/
 	else if (node->child[_i + 1]->nkeys >= T)
 	{
-		int succ = get_succ(_i, node);
+		int _temp = 0;
+		int succ = get_succ(_i, node, &_temp);
+
 		node->key[_i] = succ;
+		node->value[_i] = _temp;
+
 		btree_erase(succ, node->child[_i + 1]);
 	}
 	/*
@@ -331,6 +341,11 @@ void b_tree_class::btree_erase(int key, pointer_btree node)
 
 		/* Если у дочернего узла, где должен находиться ключ, 
 		имеется меньше, чем Т ключей, мы заполняем этот узел */
+
+		/******************/
+		/* Где-то тут баг */
+		/******************/
+
 		if (node->child[i]->nkeys < T)
 		{
 			fill(i, node);

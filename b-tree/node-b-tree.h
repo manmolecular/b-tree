@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "b-tree.h"
-#define T 4
+#define T 3
 using namespace std;
 
 /* Класс узла b-дерева */
