@@ -20,16 +20,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="node-b-tree_backup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="b-tree_backup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="node-b-tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="b-tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="backup-b-tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
