@@ -13,13 +13,13 @@ private:
 	int *key;
 	int *value;
 	b_tree_node **child;
+	int find_key(int _key);
 	friend class b_tree_class;
 public:
 	b_tree_node();
 	~b_tree_node();
 	void show();
 	int search(int _key);
-	int find_key(int _key);
 };
 
 typedef b_tree_node *pointer_btree;
